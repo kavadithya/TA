@@ -38,8 +38,11 @@ class ImagesController < ApplicationController
 		splitUp  = currentLocation.split('.')
 		newImageURL = splitUp[0] + '-cleaned.' + splitUp[1] 
 	  	cmd = 'copy ' + currentLocation + ' ' + newImageURL
+
 	  	if system(cmd)
-	  		@image.update(cleaned_image: newImageURL)
+	  		system("echo " + newImageURL)
+	  		@image.cleaned = File.open(newImageURL)
+	  		@image.save!
 	  	end
 	end		
 
