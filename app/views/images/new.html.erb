@@ -1,0 +1,19 @@
+<% provide(:title, 'New image') %>
+<h1>New image</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @image do |i| %>
+      
+    	<p>
+			<%= i.label :name %>
+			<%= i.text_field :name, class: 'form-control' %>
+		</p>
+		<p>
+			<%= i.file_field :avatar, class:'form-control input-normal' %>
+		</p>
+
+      <%= i.submit "Upload image", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
