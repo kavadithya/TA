@@ -1,3 +1,21 @@
 // Place all the styles related to the Images controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#map_wrapper {
+    width: 600px;
+    height: 377px;
+    position: relative; // this is key
+}
+.map-point {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #f00;
+    cursor:move;
+	position:absolute; /* important (all position that's not `static`) */
+
+    
+}
+

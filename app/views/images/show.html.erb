@@ -1,8 +1,73 @@
+<script type="text/javascript">
+	function YO(x,y) {
+	    var map = $('#map_wrapper'),
+	        point = $('<div class="map-point"></div>');  
+	    point.css({
+	        left: x + "px",
+	        top: y + "px"
+	    });
+	    return point.appendTo(map);
+	}
+
+	// Will be called when user starts dragging an element
+	function _drag_init(elem) {
+	    // Store the object of the element which needs to be moved
+	    selected = elem;
+	    x_elem = x_pos - selected.offsetLeft;
+	    y_elem = y_pos - selected.offsetTop;
+	}
+
+	// Will be called when user dragging an element
+	function _move_elem(e) {
+
+	    x_pos = document.all ? window.event.clientX : e.pageX;
+	    y_pos = document.all ? window.event.clientY : e.pageY;
+	    if (selected !== null) {
+	    	
+	        selected.style.left = (x_pos - x_elem) + 'px';
+	        selected.style.top = (y_pos - y_elem) + 'px';
+	    }
+	}
+
+	// Destroy the object when we are done
+	function _destroy() {
+	    selected = null;
+	}
+</script>
+<form id="plot_form">
+    <input type="submit" value="Edit this image" id="yo" />
+</form>
+
 <h1>
 	<p>
-		<%= @image.name %>
+		Cleaned Image: <%= @image.name %>
 	</p>
 	<p>
-		<%= image_tag @image.cleaned_url.to_s %>
+		<div id="map_wrapper"><%= image_tag @image.cleaned_url.to_s %></div>
 	</p>
 </h1>
+
+<script type="text/javascript">
+	var selected = null, // Object of the element to be moved
+	    x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
+	    x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
+
+	document.onmousemove = _move_elem;
+	document.onmouseup = _destroy;
+
+
+	$('#plot_form').submit(function(ev){
+	    ev.preventDefault();
+	    for(i=40;i<300;i+=10)
+	    	for(j=60;j<500;j+=30)
+	    	{
+			    pointElem = YO(i,j);
+			    pointElem.on('mousedown',function(){
+			    _drag_init(this);
+			    return false;
+				});
+
+	    	}
+	});
+</script>
+
