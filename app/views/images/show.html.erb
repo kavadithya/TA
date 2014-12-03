@@ -57,17 +57,18 @@
 
 
 	$('#plot_form').submit(function(ev){
-	    ev.preventDefault();
-	    for(i=40;i<300;i+=10)
-	    	for(j=60;j<500;j+=30)
-	    	{
-			    pointElem = YO(i,j);
-			    pointElem.on('mousedown',function(){
-			    _drag_init(this);
-			    return false;
-				});
+	   //  ev.preventDefault();
+	   //  for(i=40;i<300;i+=10)
+	   //  	for(j=60;j<500;j+=30)
+	   //  	{
+			 //    pointElem = YO(i,j);
+			 //    pointElem.on('mousedown',function(){
+			 //    _drag_init(this);
+			 //    return false;
+				// });
 
-	    	}
+	   //  	}
+	   alert("Priya, this button is pending on you. Get to work!! :)")
 	});
 
 	var data = "<%= @data %>"
