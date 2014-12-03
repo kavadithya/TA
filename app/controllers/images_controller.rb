@@ -35,15 +35,17 @@ class ImagesController < ApplicationController
 	def save_cleaned
 	  	currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
 	  	currentLocation.gsub! '/','\\'
-		splitUp  = currentLocation.split('.')
-		newImageURL = splitUp[0] + '-cleaned.' + splitUp[1] 
-	  	cmd = 'copy ' + currentLocation + ' ' + newImageURL
+  		path, slash, imageName  = currentLocation.rpartition("\\")
+	    newImageURL = path + '\\cleaned\\' + imageName 
+      system("echo " + newImageURL)
+      cmd = 'java -jar F:\\TA\\cleaner_64.jar 1 ' + currentLocation
+      if system(cmd)
+        print "DONE :)"
+        @image.cleaned = File.open(newImageURL)
+        @image.save!
+      end
 
-	  	if system(cmd)
-	  		system("echo " + newImageURL)
-	  		@image.cleaned = File.open(newImageURL)
-	  		@image.save!
-	  	end
+
 	end		
 
 end
