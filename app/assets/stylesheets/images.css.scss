@@ -9,9 +9,9 @@
     position: relative; // this is key
 }
 .map-point {
-    width: 8px;
-    height: 8px;
-    border-radius: 4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 1px;
     background-color: #f00;
     cursor:move;
 	position:absolute; /* important (all position that's not `static`) */

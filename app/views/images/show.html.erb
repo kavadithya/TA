@@ -69,5 +69,20 @@
 
 	    	}
 	});
+
+	var data = "<%= @data %>"
+	data = data.replace(/{/g,"");
+	data = data.replace(/}/g,"");
+	data = data.replace("[","");
+	data = data.replace("]","");
+	var points = data.split(",",500);
+	for(i=0;i<points.length;i+=2){
+		// YO(points[i],points[i+1]);
+	    pointElem = YO(points[i],points[i+1]);
+	    pointElem.on('mousedown',function(){
+	    _drag_init(this);
+	    return false;
+		});
+	}
 </script>
 

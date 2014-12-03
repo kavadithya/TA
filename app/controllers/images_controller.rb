@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-  
+  require 'json'
+
   def new
   	@image = Image.new
   end
@@ -19,6 +20,7 @@ class ImagesController < ApplicationController
 
   def show
   	@image = Image.find(params[:id])
+    read_json_points
   end
 
   def index
@@ -33,19 +35,27 @@ class ImagesController < ApplicationController
 	end
 
 	def save_cleaned
-	  	currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
-	  	currentLocation.gsub! '/','\\'
-  		path, slash, imageName  = currentLocation.rpartition("\\")
-	    newImageURL = path + '\\cleaned\\' + imageName 
-      system("echo " + newImageURL)
-      cmd = 'java -jar F:\\TA\\cleaner_64.jar 1 ' + currentLocation
-      if system(cmd)
-        print "DONE :)"
-        @image.cleaned = File.open(newImageURL)
-        @image.save!
-      end
-
-
+  	currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
+  	currentLocation.gsub! '/','\\'
+		path, slash, imageName  = currentLocation.rpartition("\\")
+    newImageURL = path + '\\cleaned\\' + imageName 
+    system("echo " + newImageURL)
+    cmd = 'java -jar F:\\TA\\cleaner_64.jar 1 ' + currentLocation
+    if system(cmd)
+      print "DONE :)"
+      @image.cleaned = File.open(newImageURL)
+      @image.save!
+    end
 	end		
+
+  def read_json_points
+    currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
+    currentLocation.gsub! '/','\\'
+    path, slash, imageName  = currentLocation.rpartition(".jpg")
+    jsonFileLocation = path + ".json"
+    @data = File.read(jsonFileLocation)
+    print @data
+
+  end
 
 end
