@@ -35,12 +35,12 @@ class ImagesController < ApplicationController
 	end
 
 	def save_cleaned
-  	currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
+  	currentLocation = 'public' +  @image.avatar_url.to_s
   	currentLocation.gsub! '/','\\'
 		path, slash, imageName  = currentLocation.rpartition("\\")
     newImageURL = path + '\\cleaned\\' + imageName 
     system("echo " + newImageURL)
-    cmd = 'java -jar F:\\TA\\cleaner_64.jar 1 ' + currentLocation
+    cmd = 'java -jar cleaner_64.jar 1 ' + currentLocation
     if system(cmd)
       print "DONE :)"
       @image.cleaned = File.open(newImageURL)
@@ -49,7 +49,7 @@ class ImagesController < ApplicationController
 	end		
 
   def read_json_points
-    currentLocation = 'F:\TA\public' + @image.avatar_url.to_s
+    currentLocation = 'public' + @image.avatar_url.to_s
     currentLocation.gsub! '/','\\'
     path, slash, imageName  = currentLocation.rpartition(".jpg")
     jsonFileLocation = path + ".json"
